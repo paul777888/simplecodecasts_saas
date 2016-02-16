@@ -4,15 +4,14 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   belongs_to :plan
+  has_one :profile
   attr_accessor :stripe_card_token
   
   def save_with_payment
-    #if user filled out form properly
-    if valid? 
-      #create the customer and charge the customer simutenisouly
-      customer = Stripe::Customer.create(description:email, plan:plan_id,card:stripe_card_token)
+    if valid?
+      customer = Stripe::Customer.create(description: email, plan: plan_id, card: stripe_card_token)
       self.stripe_customer_token = customer.id
       save!
     end
-  end  
+  end
 end
