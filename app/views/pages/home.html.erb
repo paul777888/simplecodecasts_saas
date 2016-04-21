@@ -1,10 +1,28 @@
-<%= link_to "Create your profile",new_user_profile_path(current_user) if current_user%>
-
 <div class="jumbotron text-center">
     <h1>Welcome to Dev Match</h1>
     <h3>A membership site where enterprenuers can meet developers</h3>
 </div>
 <div class="row">
+    <% if user_signed_in? %>
+        <div class="col-md-6">
+         <div class="well">   
+            <h2 class="text-center">Your Profile</h2>
+            <% if current_user.profile %>
+              <%=link_to "Edit your profile","#",class:'btn btn-default btn-block btn-lg' %>
+              <%=link_to "View your profile", user_path(current_user),class:'btn btn-default btn-block btn-lg' %>
+            <%else%>  
+              <%= link_to "Create your profile",new_user_profile_path(current_user),class:'btn btn-default btn-block btn-lg'%>
+            <%end%>
+         </div>     
+        </div>
+        <div class = "col-md-6">
+            <div class="well">
+              <h2 class="text-center">The Community</h2>  
+              <p class="text-center">Visit the community to meet other developers,entrepreneurs, and investor!</p>
+              <%=link_to "Visit the Community","#",class:'btn btn-default btn-block btn-lg' %>
+            </div>
+        </div>
+    <% else %>
     <div class="col-md-6">
         <div class="well">
             <h2 class="text-center">Basic Membership</h2>
@@ -20,4 +38,5 @@
 
         </div>
     </div>
+  <% end %>    
 </div>
